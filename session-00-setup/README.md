@@ -164,17 +164,69 @@ public class HelloWorldResource {
 ¡Es hora de ver el resultado!
 
 1. Construir el Proyecto: Abre una terminal en la raíz de tu proyecto y ejecuta: \
-   **Windows:**
+   
+   **Windows**:
    ```powershell
    .\mvnw clean package
    ```
-   **Linux/macOS**
+   
+   **Linux/macOS**:
    ```shell
    ./mvnw clean package
    ```
+   
    Esto generará el archivo `target/project-tracker-1.0-SNAPSHOT.war`. Si deseamos que tenga un nombre más corto, como `project-tracker`, creemos la siguiente línea en la sección `<build>` del archivo `pom.xml`.
+   
    ```xml
    <finalName>project-tracker</finalName>
    ``` 
+   
    Ejecutemos nuevamente el comando `mvnw clean package` y tendremos el archivo `target/project-tracker.war`
-2. Desplegar la Aplicación:
+
+2. Iniciar Payara Server: Ve a la carpeta donde descomprimiste Payara 7 y ejecuta:
+
+    ```shell
+    # Para Windows
+    cd C:\payara7\bin
+    asadmin start-domain
+    
+    # Para macOS/Linux
+    cd ~/payara7/bin
+    ./asadmin start-domain
+   ```
+
+3. **Desplegar la Aplicación (La forma fácil)**: Busca la carpeta `autodeploy` de Payara.\
+   Usualmente está en: `[PAYARA_HOME]/glassfish/domains/domain1/autodeploy/` \
+   Copia tu archivo `target/project-tracker.war` dentro de esa carpeta `autodeploy`.\
+   Payara detectará automáticamente el archivo y lo desplegará.\
+   \
+   Una manera de saber si desplegó correctamente o no, es mirando el log que se encuentra aquí: `[PAYARA_HOME]/glassfish/domains/domain1/logs/server.log` 
+   
+   \
+   El contenido sería como este:
+   ![](https://i.imgur.com/UZVIRie.png) 
+
+4. **Verificar**: Abre tu navegador web o un cliente API (como Postman, cURL) y visita: \
+   \
+   http://localhost:8080/project-tracker/resources/hello
+
+   \
+   _Analicemos esa URL:_
+   * `localhost:8080`: Tu servidor Payara.
+   * `/project-tracker`: El nombre de tu archivo `.war` (definido en el `pom.xml` como `finalName`).
+   * `/resources`: El prefijo que está en [`RestConfiguration.java`](src/main/java/fish/payara/resource/RestConfiguration.java).
+   * `/hello`: La ruta que está en [`HelloWorldResource.java`](src/main/java/fish/payara/resource/HelloWorldResource.java).
+
+**Resultado esperado**
+
+Deberías ver algo así:
+
+En un navegador:\
+![](https://i.imgur.com/58qrdMl.png)
+
+
+-----
+
+¡Felicidades! Has configurado con éxito un servidor Payara 7 y has desplegado tu primera aplicación Jakarta EE 11.
+
+En la próxima sesión, reemplazaremos este endpoint de prueba por uno real para gestionar nuestros "Proyectos", introduciendo Jakarta REST (JAX-RS) y Jakarta JSON Binding (JSON-B).
