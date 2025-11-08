@@ -15,4 +15,4 @@ Bienvenido a este tutorial paso a paso para construir una aplicación empresaria
 * Payara 7 Community (El servidor de aplicaciones)
 * Maven (Gestión de dependencias)
 
-El contenido del tutorial se encuentra aquí: [Contenido](README.md)
+El contenido del tutorial se encuentra aquí: [Contenido](SUMMARY.md)
