@@ -4,7 +4,7 @@
 
 0. [Sesión 0: Configuración del Entorno y "Hola Mundo"](session-00-setup/README.md)\
    Objetivo: Configurar el proyecto base y el servidor. Especificaciones: Ninguna (solo configuración).
-1. Sesión 1: La Capa API REST (Endpoints)\
+1. [Sesión 1: La Capa API REST (Endpoints)](session-01-jaxrs/README.md)\
    Objetivo: Crear los endpoints HTTP para gestionar Proyectos
 2. Sesión 2: El Corazón de la Aplicación (Inyección de Dependencias) \
    Objetivo: Conectar la capa REST con la lógica de negocio usando CDI.

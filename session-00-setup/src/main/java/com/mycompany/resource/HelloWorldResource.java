@@ -1,4 +1,4 @@
-package fish.payara.resource;
+package com.mycompany.resource;
 
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;

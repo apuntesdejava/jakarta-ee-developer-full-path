@@ -106,7 +106,7 @@ El generador de Payara ya crea las clases necesarias para comenzar un ejemplo AP
 
 ### Activador de JAX-RS
 
-La primera clase le dice a Jakarta EE "¡Quiero activar la API REST en esta aplicación!". Esta clase es [`RestConfiguration.java`](src/main/java/fish/payara/resource/RestConfiguration.java)
+La primera clase le dice a Jakarta EE "¡Quiero activar la API REST en esta aplicación!". Esta clase es [`RestConfiguration.java`](src/main/java/com/mycompany/resource/RestConfiguration.java)
 
 ```java
 package fish.payara.resource;
@@ -128,7 +128,7 @@ public class RestConfiguration extends Application {
 
 ### El Endpoint "Hello"
 
-La otra clase es [`HelloWorldResource.java`](src/main/java/fish/payara/resource/HelloWorldResource.java) que responderá a las peticiones.
+La otra clase es [`HelloWorldResource.java`](src/main/java/com/mycompany/resource/HelloWorldResource.java) que responderá a las peticiones.
 
 ```java
 package fish.payara.resource;
@@ -214,8 +214,8 @@ public class HelloWorldResource {
    _Analicemos esa URL:_
    * `localhost:8080`: Tu servidor Payara.
    * `/project-tracker`: El nombre de tu archivo `.war` (definido en el `pom.xml` como `finalName`).
-   * `/resources`: El prefijo que está en [`RestConfiguration.java`](src/main/java/fish/payara/resource/RestConfiguration.java).
-   * `/hello`: La ruta que está en [`HelloWorldResource.java`](src/main/java/fish/payara/resource/HelloWorldResource.java).
+   * `/resources`: El prefijo que está en [`RestConfiguration.java`](src/main/java/com/mycompany/resource/RestConfiguration.java).
+   * `/hello`: La ruta que está en [`HelloWorldResource.java`](src/main/java/com/mycompany/resource/HelloWorldResource.java).
 
 **Resultado esperado**
 
