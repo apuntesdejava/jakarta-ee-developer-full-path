@@ -1,8 +1,13 @@
 package com.mycompany.projecttracker.rest;
 
 import com.mycompany.projecttracker.model.ProjectDTO;
-import jakarta.inject.Inject;
-import jakarta.ws.rs.*;
+import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.POST;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.PathParam;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriInfo;
@@ -31,9 +36,11 @@ public class ProjectResource {
     // Bloque estático para poblar con datos de prueba
     static {
         long id1 = idCounter.incrementAndGet();
-        projectDatabase.put(id1, new ProjectDTO(id1, "Sitio Web Corporativo", "Desarrollo del nuevo sitio web v2", "Activo"));
+        projectDatabase.put(id1,
+            new ProjectDTO(id1, "Sitio Web Corporativo", "Desarrollo del nuevo sitio web v2", "Activo"));
         long id2 = idCounter.incrementAndGet();
-        projectDatabase.put(id2, new ProjectDTO(id2, "App Móvil (ProjectTracker)", "Lanzamiento de la app nativa", "Planificado"));
+        projectDatabase.put(id2,
+            new ProjectDTO(id2, "App Móvil (ProjectTracker)", "Lanzamiento de la app nativa", "Planificado"));
     }
     // --- Fin de la simulación ---
 
@@ -43,7 +50,7 @@ public class ProjectResource {
      * Nota EE 11: Usamos @Inject (CDI) en lugar del antiguo @Context (JAX-RS).
      * Esto muestra la profunda integración de CDI en toda la plataforma.
      */
-    @Inject
+    @Context
     private UriInfo uriInfo;
 
     /**

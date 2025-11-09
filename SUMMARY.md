@@ -6,7 +6,7 @@
    Objetivo: Configurar el proyecto base y el servidor. Especificaciones: Ninguna (solo configuración).
 1. [Sesión 1: La Capa API REST (Endpoints)](session-01-jaxrs/README.md)\
    Objetivo: Crear los endpoints HTTP para gestionar Proyectos
-2. Sesión 2: El Corazón de la Aplicación (Inyección de Dependencias) \
+2. [Sesión 2: El Corazón de la Aplicación (Inyección de Dependencias)](session-02-cdi/README.md) \
    Objetivo: Conectar la capa REST con la lógica de negocio usando CDI.
 3. Sesión 3: La Capa de Persistencia (Base de Datos)\
    Objetivo: Definir el modelo de datos y guardarlo en la base de datos.

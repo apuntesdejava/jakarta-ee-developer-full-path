@@ -51,8 +51,13 @@ Renombra (o crea) el archivo [`ProjectResource.java`](src/main/java/com/mycompan
 package com.mycompany.projecttracker.rest;
 
 import com.mycompany.projecttracker.model.ProjectDTO;
-import jakarta.inject.Inject;
-import jakarta.ws.rs.*;
+import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.POST;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.PathParam;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriInfo;
@@ -81,9 +86,11 @@ public class ProjectResource {
     // Bloque estático para poblar con datos de prueba
     static {
         long id1 = idCounter.incrementAndGet();
-        projectDatabase.put(id1, new ProjectDTO(id1, "Sitio Web Corporativo", "Desarrollo del nuevo sitio web v2", "Activo"));
+        projectDatabase.put(id1,
+            new ProjectDTO(id1, "Sitio Web Corporativo", "Desarrollo del nuevo sitio web v2", "Activo"));
         long id2 = idCounter.incrementAndGet();
-        projectDatabase.put(id2, new ProjectDTO(id2, "App Móvil (ProjectTracker)", "Lanzamiento de la app nativa", "Planificado"));
+        projectDatabase.put(id2,
+            new ProjectDTO(id2, "App Móvil (ProjectTracker)", "Lanzamiento de la app nativa", "Planificado"));
     }
     // --- Fin de la simulación ---
 
@@ -93,7 +100,7 @@ public class ProjectResource {
      * Nota EE 11: Usamos @Inject (CDI) en lugar del antiguo @Context (JAX-RS).
      * Esto muestra la profunda integración de CDI en toda la plataforma.
      */
-    @Inject
+    @Context
     private UriInfo uriInfo;
 
     /**
@@ -133,17 +140,17 @@ public class ProjectResource {
         // Valida la entrada (simple por ahora)
         if (projectRequest == null || projectRequest.name() == null || projectRequest.name().isEmpty()) {
             return Response.status(Response.Status.BAD_REQUEST)
-                    .entity("El nombre del proyecto es obligatorio.")
-                    .build();
+                .entity("El nombre del proyecto es obligatorio.")
+                .build();
         }
 
         // Genera un nuevo ID y crea el DTO
         long newId = idCounter.incrementAndGet();
         ProjectDTO newProject = new ProjectDTO(
-                newId,
-                projectRequest.name(),
-                projectRequest.description(),
-                "Nuevo" // Estado por defecto
+            newId,
+            projectRequest.name(),
+            projectRequest.description(),
+            "Nuevo" // Estado por defecto
         );
 
         projectDatabase.put(newId, newProject);
@@ -205,10 +212,13 @@ Quizás te preguntes: "¿Cómo sabe `Response.ok(projects)` que debe convertir e
       ```
 
       *Verás una respuesta `201 Created` y el JSON del nuevo proyecto (¡con `id: 3`\!).*
-
+      
+      Ejemplo en consola usando httpie
+      ![](https://i.imgur.com/Ch6t6As.png)
     * **Verifica la creación:**
       Vuelve a ejecutar el `GET` de todos los proyectos y verás que tu nuevo proyecto ahora está en la lista.
 
+      ![](https://i.imgur.com/GqlEuyH.png)
 -----
 
 ¡Felicidades\! Acabas de crear una API REST funcional usando JAX-RS 4.0, con serialización JSON automática gracias a JSON-B 3.1.
