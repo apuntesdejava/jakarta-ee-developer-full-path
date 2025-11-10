@@ -65,7 +65,7 @@ Bienvenido a este tutorial paso a paso para construir una aplicación empresaria
 4.  Mover la lógica de "negocio" (por ahora simulada) al servicio.
 5.  **Novedad EE 11:** Explicar el soporte mejorado de CDI, como `@Priority` en los productores.
 
-## Sesión 3: La Capa de Persistencia (Base de Datos)
+## [Sesión 3: La Capa de Persistencia (Base de Datos)](session-03-jpa/README.md)
 
 **Objetivo:** Definir el modelo de datos y guardarlo en la base de datos.
 **Especificaciones:**

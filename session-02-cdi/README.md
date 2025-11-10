@@ -27,7 +27,7 @@ CDI se encarga de encontrar o crear esa instancia "B" y "conectarla" (inyectarla
 Primero, creemos la clase que manejará la lógica.
 
 Crea un nuevo paquete: `com.mycompany.projecttracker.service`.
-Dentro, crea la clase `ProjectService.java`:
+Dentro, crea la clase [`ProjectService.java`](src/main/java/com/mycompany/projecttracker/service/ProjectService.java):
 
 ```java
 package com.mycompany.projecttracker.service;
@@ -100,7 +100,7 @@ public class ProjectService {
 
 Ahora, limpiemos nuestra clase `ProjectResource` para que *use* el nuevo servicio.
 
-Modifica tu archivo `ProjectResource.java`:
+Modifica tu archivo [`ProjectResource.java`](src/main/java/com/mycompany/projecttracker/rest/ProjectResource.java):
 
 ```java
 package com.mycompany.projecttracker.rest;
@@ -207,11 +207,179 @@ Esto es lo mejor. Aunque hemos cambiado drásticamente la estructura interna del
 2.  **Prueba (Re-usa las pruebas de la Sesión 1):**
     Usa `curl` o Postman exactamente como antes.
 
-    * `GET /api/projects`: Seguirá devolviendo los dos proyectos de prueba.
-    * `POST /api/projects`: Seguirá creando el proyecto con `id: 3`.
-    * `GET /api/projects/3`: Ahora encontrará el proyecto que acabas de crear.
+    * `GET /resources/projects`: Seguirá devolviendo los dos proyectos de prueba.
+    * `POST /resources/projects`: Seguirá creando el proyecto con `id: 3`.
+    * `GET /resources/projects/3`: Ahora encontrará el proyecto que acabas de crear.
 
 Si miras la consola de Payara (o el `server.log`), deberías ver nuestro mensaje: `ProjectService inicializado... (Singleton)`. Y solo aparecerá una vez, demostrando que es un Singleton.
+
+![](https://i.imgur.com/1oU9HcQ.png)
+
+
+-----
+
+## 💡 Resolviendo ambigüedad con Qualifiers
+
+En nuestra sesión, inyectamos `ProjectService`:
+
+```java
+@Inject
+private ProjectService projectService;
+```
+
+CDI supo qué inyectar porque solo teníamos **una clase** (`ProjectService`) anotada con `@ApplicationScoped`.
+
+**¿Pero qué pasa si tuviéramos dos?**
+
+Imagina que queremos tener un "servicio de saludo" en nuestra app, y tenemos dos implementaciones:
+
+1.  Una interfaz: [`GreetingService.java`](src/main/java/com/mycompany/projecttracker/service/GreetingService.java)
+2.  Una implementación "normal": [`DefaultGreeting.java`](src/main/java/com/mycompany/projecttracker/service/impl/DefaultGreeting.java)
+3.  Una implementación "para pruebas" o "especial": [`MockGreeting.java`](src/main/java/com/mycompany/projecttracker/service/impl/MockGreeting.java)
+
+**El Problema: Dependencia Ambigua**
+
+Si ambas clases `DefaultGreeting` y `MockGreeting` implementan `GreetingService` y ambas están anotadas con `@ApplicationScoped`, cuando intentes hacer esto:
+
+```java
+@Inject
+private GreetingService greetingService; // <-- ¡ERROR!
+```
+
+CDI te dará un error de `WELD-001409: Ambiguous dependencies for type GreetingService with qualifiers @Default` (Excepción de Dependencia Ambigua) durante el despliegue. CDI dirá: "¡Me diste dos opciones\! No sé cuál debo inyectar."
+
+**La Solución: `@Qualifier`**
+ 
+
+### 1\. Crear nuestras "Etiquetas" (Qualifiers)
+
+Primero, creamos una anotación que actuará como nuestra etiqueta.
+
+Crea un nuevo paquete `com.mycompany.projecttracker.service.qualifier`.
+Dentro, crea la anotación [`GreetingType.java`](src/main/java/com/mycompany/projecttracker/service/qualifier/GreetingType.java):
+
+```java
+package com.mycompany.projecttracker.service.qualifier;
+
+import jakarta.inject.Qualifier;
+import java.lang.annotation.Retention;
+import java.lang.annotation.Target;
+
+import static java.lang.annotation.ElementType.*;
+import static java.lang.annotation.RetentionPolicy.RUNTIME;
+
+/**
+ * Nuestro Qualifier personalizado para seleccionar un tipo de saludo.
+ */
+@Qualifier
+@Retention(RUNTIME)
+@Target({FIELD, METHOD, PARAMETER, TYPE})
+public @interface GreetingType {
+    /**
+     * Definimos un miembro para poder especificar qué tipo queremos.
+     * (Podríamos usar un Enum, pero String es simple)
+     */
+    String value() default "default";
+}
+```
+
+* `@Qualifier`: Esto le dice a CDI que esta anotación es una "etiqueta" de calificación.
+
+### 2\. Etiquetar nuestras Implementaciones
+
+Ahora, usamos nuestra nueva etiqueta en las clases de servicio:
+
+[`DefaultGreeting.java`](src/main/java/com/mycompany/projecttracker/service/impl/DefaultGreeting.java)
+
+```java
+package com.mycompany.projecttracker.service.impl;
+
+import com.mycompany.projecttracker.service.qualifier.GreetingType;
+import jakarta.enterprise.context.ApplicationScoped;
+
+@ApplicationScoped
+@GreetingType("default") // <-- Etiqueta 1
+public class DefaultGreeting implements GreetingService {
+    public String greet(String name) {
+        return "¡Hola, " + name + "!";
+    }
+}
+```
+
+[`MockGreeting.java`](src/main/java/com/mycompany/projecttracker/service/impl/MockGreeting.java)
+
+```java
+package com.mycompany.projecttracker.service.impl;
+
+import com.mycompany.projecttracker.service.qualifier.GreetingType;
+import jakarta.enterprise.context.ApplicationScoped;
+
+@ApplicationScoped
+@GreetingType("mock") // <-- Etiqueta 2
+public class MockGreeting implements GreetingService {
+    public String greet(String name) {
+        return "Modo de Prueba: Hola, " + name;
+    }
+}
+```
+
+### 3\. Inyectar Específicamente
+
+Ahora, cuando inyectamos, ya no somos ambiguos. Le decimos a CDI *exactamente* cuál queremos. Lo usaremos en el ejemplo de [`HelloWorlResource`](C:\proys\jakartaee-tutorial\jakarta-ee-developer-full-path\session-02-cdi\src\main\java\com\mycompany\resource\HelloWorldResource.java)
+
+```java
+package com.mycompany.resource;
+
+import com.mycompany.projecttracker.service.GreetingService;
+import com.mycompany.projecttracker.service.qualifier.GreetingType;
+import jakarta.inject.Inject;
+import jakarta.ws.rs.DefaultValue;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.QueryParam;
+import jakarta.ws.rs.core.Response;
+
+@Path("hello")
+public class HelloWorldResource {
+
+    @Inject
+    @GreetingType("default")
+    GreetingService greetingService;
+
+    @Inject
+    @GreetingType("mock")
+    GreetingService greetingMockService;
+
+    @GET
+    public Response hello(@QueryParam("name") @DefaultValue("world") String name) {
+        return Response
+            .ok(greetingService.greet(name))
+            .build();
+    }
+
+    @GET
+    @Path("mock")
+    public Response helloMock(@QueryParam("name") @DefaultValue("world") String name) {
+        return Response
+            .ok(greetingMockService.greet(name))
+            .build();
+    }
+
+
+} 
+```
+
+### Probando
+
+Como hemos creado un endpoint para cada implementación, probemos:
+
+**Llamando a la implementación `default`**
+
+![](https://i.imgur.com/cEqPNZd.png)
+
+**Llamando a la implementación `mock`**
+
+![](https://i.imgur.com/gmroGzg.png)
 
 -----
 
