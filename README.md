@@ -1,6 +1,6 @@
 #  Tutorial: Aplicación Full-Stack con Jakarta EE 11 y Payara 7
 
-Bienvenido a este tutorial paso a paso para construir una aplicación empresarial moderna desde cero utilizando Jakarta EE 11. Usaremos Payara 7 Community (Beta), ya que es la versión compatible con Jakarta EE 11
+Bienvenido a este tutorial paso a paso para construir una aplicación empresarial moderna desde cero utilizando Jakarta EE 11. Usaremos Payara 7 Community, ya que es la versión compatible con Jakarta EE 11
 
 **Tema de la Aplicación: `ProjectTracker`**
 

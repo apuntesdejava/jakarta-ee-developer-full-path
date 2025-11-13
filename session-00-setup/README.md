@@ -23,7 +23,7 @@ Antes de empezar, asegúrate de tener instalado lo siguiente:
 Usaremos Payara 7 Community Edition, que es la implementación compatible con Jakarta EE 11.
 
 1. **Descarga**: Ve a la [página de descargas de Payara](https://payara.fish/downloads/payara-platform-community-edition/).
-2. **Selecciona**: Elige la versión más reciente de Payara 7 Community (Beta). (Nota: A medida que avance el 2025, esta versión saldrá de Beta, pero será la versión 7 la que necesitemos).
+2. **Selecciona**: Elige la versión más reciente de Payara 7 Community.
 3. **Descomprime**: Descomprime el archivo ZIP en una ubicación de tu elección (ej. `C:\payara7` o `~/payara7`).
 
 ## 3. Generar el Proyecto con Payara Starter
@@ -42,7 +42,7 @@ Para evitar escribir el `pom.xml` de configuración desde cero, usaremos la herr
      - Profile: `Web Profile` (Es un buen punto de partida. Añadiremos más dependencias después).
    - Payara Platform
      - Payara Server
-     - Payara Platform version: `7.2025.1.Beta1`
+     - Payara Platform version: `7.2025.1`
    - Project Configuration
      - Package: (el mismo de su Group ID)
      - No incluir Test
@@ -62,7 +62,7 @@ Lo más importante que ha generado esta herramienta está en tu [`pom.xml`](pom.
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.release>21</maven.compiler.release>
         <jakartaee-api.version>11.0.0</jakartaee-api.version>
-        <payara.version>7.2025.1.Beta1</payara.version>
+        <payara.version>7.2025.1</payara.version>
         <payara.home>payara6</payara.home>
     </properties>
     
