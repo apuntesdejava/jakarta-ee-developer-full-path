@@ -4,10 +4,10 @@
     <jta-data-source>jdbc/projectTracker</jta-data-source>
     <class>com.mycompany.projecttracker.entity.Project</class>
     <properties>
-      <property name="jakarta.persistence.schema-generation.database.action" value="drop-and-create"/> 
+      <property name="jakarta.persistence.schema-generation.database.action" value="drop-and-create"/>
+      <property name="jakarta.persistence.schema-generation.create-script-source" value="META-INF/sql/create.sql"/>
+      <property name="jakarta.persistence.schema-generation.drop-script-source" value="META-INF/sql/drop.sql"/>
       <property name="jakarta.persistence.sql-load-script-source" value="META-INF/sql/import.sql"/>
-      
-      <property name="eclipselink.target-database" value="org.eclipse.persistence.platform.database.H2Platform"/>      
       <property name="eclipselink.logging.level.sql" value="FINE"/>
       <property name="eclipselink.logging.parameters" value="true"/>
     </properties>

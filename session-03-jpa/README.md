@@ -1,4 +1,4 @@
-# Sesión 3: La Capa de Persistencia (JPA)
+# Sesión 3: La Capa de Persistencia (Jakarta Persistence) y Relaciones
 
 ¡Adiós, `Map` estático\! En esta sesión, conectaremos nuestra aplicación a una **base de datos real**. Para hacer esto, no escribiremos SQL (directamente). Usaremos el estándar de Jakarta EE para el Mapeo Objeto-Relacional (ORM).
 
@@ -168,19 +168,44 @@ Dentro, crea el archivo [`persistence.xml`](src/main/resources/META-INF/persiste
 </persistence>
 ```
 
-## 4\. Paso 4 (Opcional): Crear `import.sql`
+## 4\. Paso 4: Script DDL `create.sql`
 
-Para tener datos de prueba (ya que borramos nuestro constructor en `ProjectService`), podemos añadir un script SQL.
+Podemos dejar que Jakarta Persistence cree las entidades. O - lo más recomendable es - poner el script de creación de las tablas.
+
+Este script de creación de las tablas **debe tener un comando por línea**.
+
+Por ello, vamos a crear el archivo [`src/main/resources/META-INF/sql/create.sql`](src/main/resources/META-INF/sql/create.sql) con el siguiente contenido:
+
+```sql
+CREATE TABLE PROJECT (  ID BIGINT GENERATED ALWAYS AS IDENTITY NOT NULL,  DEADLINE DATE,  DESCRIPTION LONGVARCHAR,  NAME VARCHAR(100) NOT NULL,  STATUS VARCHAR(20),  PRIMARY KEY (ID) );
+```
+
+También, podemos tener un script para eliminar las tablas. El archivo se llamará [`src/main/resources/META-INF/sql/drop.sql`](src/main/resources/META-INF/sql/drop.sql) con el siguiente conteido:
+
+```sql
+DROP TABLE PROJECT IF EXISTS;
+```
+
+Además, para tener datos de prueba (ya que borramos nuestro constructor en `ProjectService`), podemos añadir un script SQL.
 
 Crea el archivo [`src/main/resources/META-INF/sql/import.sql`](src/main/resources/META-INF/sql/import.sql):
 
 ```sql
 -- Inserta datos de prueba al iniciar la aplicación
-INSERT INTO PROJECT (ID, NAME, DESCRIPTION, STATUS, DEADLINE) VALUES (1, 'Sitio Web Corporativo', 'Desarrollo del nuevo sitio web v2', 'Activo', '2025-12-31');
-INSERT INTO PROJECT (ID, NAME, DESCRIPTION, STATUS, DEADLINE) VALUES (2, 'App Móvil (ProjectTracker)', 'Lanzamiento de la app nativa', 'Planificado', '2026-03-15');
+INSERT INTO PROJECT (NAME, DESCRIPTION, STATUS, DEADLINE) VALUES ('Sitio Web Corporativo', 'Desarrollo del nuevo sitio web v2', 'Activo', '2025-12-31');
+INSERT INTO PROJECT (NAME, DESCRIPTION, STATUS, DEADLINE) VALUES ('App Móvil (ProjectTracker)', 'Lanzamiento de la app nativa', 'Planificado', '2026-03-15');
 ```
 
-*Nota: Tuvimos que añadir `ID` porque H2 no lo autogenera con `import.sql`. Para `em.persist()`, sí funcionará el autoincremento.*
+Finalmente, debemos considerar las siguientes propiedades en el archivo [`persistence.xml`](src/main/resources/META-INF/persistence.xml)
+
+```xml
+    <properties>
+<!--- las demás propiedades -->
+      <property name="jakarta.persistence.schema-generation.create-script-source" value="META-INF/sql/create.sql"/>
+      <property name="jakarta.persistence.schema-generation.drop-script-source" value="META-INF/sql/drop.sql"/>
+<!-- otras propiedades -->
+    </properties>
+```
 
 ## 5\. Paso 5: Crear el Mapper (DTO \<-\> Entidad)
 
