@@ -13,5 +13,6 @@
         <module>session-01-jaxrs</module>
         <module>session-02-cdi</module>
         <module>session-03-jpa</module>
+        <module>session-04-validation</module>
     </modules>
 </project>

@@ -466,7 +466,8 @@ public class ProjectService {
 
     * **Obtener Todos (GET):**
       `curl http://localhost:8080/project-tracker/resources/projects`
-      *Verás el JSON de los dos proyectos del archivo `import.sql`.*
+      *Verás el JSON de los dos proyectos del archivo `import.sql`.*\
+      \
       ![](https://i.imgur.com/DW1Gqaz.png) 
 
     * **Crear Uno (POST):**
@@ -482,7 +483,8 @@ public class ProjectService {
     
     * **Verifica la creación:**
       `curl http://localhost:8080/project-tracker/resources/projects/3`
-      *Verás tu proyecto recién creado.*
+      *Verás tu proyecto recién creado.*\
+      \ 
       ![](https://i.imgur.com/riiblGC.png) 
 
     * **Importante:** Si reinicias Payara, la base de datos se recreará por la opción `drop-and-create`. ¡Perfecto para desarrollo\!

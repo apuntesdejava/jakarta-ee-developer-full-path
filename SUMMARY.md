@@ -81,7 +81,7 @@ Bienvenido a este tutorial paso a paso para construir una aplicación empresaria
       * Usar tipos de `java.time` (como `Instant` o `Year`) que ahora son soportados nativamente.
       * Mostrar cómo usar un `Record` de Java como `@Embeddable` (ej. un `AuditInfo(createdBy, createdAt)`).
 
-## Sesión 4: Validación de Datos
+## [Sesión 4: Validación de Datos](session-04-validation/README.md)
 
 **Objetivo:** Asegurar que los datos que entran a la API sean válidos.
 **Especificaciones:**
