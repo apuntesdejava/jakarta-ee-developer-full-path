@@ -45,7 +45,7 @@ Bienvenido a este tutorial paso a paso para construir una aplicación empresaria
 <!-- end list -->
 
 1.  Crear la clase `ProjectResource.java`.
-2.  Mapear las rutas: `GET /api/projects`, `GET /api/projects/{id}`, `POST /api/projects`.
+2.  Mapear las rutas: `GET /resources/projects`, `GET /resources/projects/{id}`, `POST /resources/projects`.
 3.  Crear un DTO (Data Transfer Object) simple, por ejemplo, `ProjectDTO`. 
 
 [//]: # (4.  **Novedad EE 11:** Mostrar cómo usar la inyección de CDI &#40;`@Inject`&#41; en lugar del antiguo `@Context` &#40;ahora obsoleto&#41; para inyectar información de la solicitud.)
@@ -95,7 +95,7 @@ Bienvenido a este tutorial paso a paso para construir una aplicación empresaria
 3.  Manejar las `ConstraintViolationException` para devolver errores 400 (Bad Request) claros.
 4.  **Novedad EE 11:** Mostrar cómo aplicar reglas de validación a `Records` de Java.
 
-## Sesión 5: Simplificando el Acceso a Datos (¡La gran novedad\!)
+## [Sesión 5: Simplificando el Acceso a Datos (¡La gran novedad\!)](session-05-data/README.md)
 
 **Objetivo:** Reducir drásticamente el código boilerplate de la base de datos.
 **Especificaciones:**

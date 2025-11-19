@@ -125,7 +125,7 @@ public class ProjectResource {
 
     /**
      * Método para CREAR un nuevo proyecto.
-     * Responde a: POST /api/projects
+     * Responde a: POST /resources/projects
      */
     @POST
     public Response createProject(@Valid ProjectDTO projectRequest) { // <-- ¡AQUÍ!

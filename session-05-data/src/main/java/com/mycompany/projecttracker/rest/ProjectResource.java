@@ -3,12 +3,14 @@ package com.mycompany.projecttracker.rest;
 import com.mycompany.projecttracker.model.ProjectDTO;
 import com.mycompany.projecttracker.service.ProjectService;
 import jakarta.inject.Inject;
+import jakarta.validation.Valid; // <-- ¡IMPORTANTE!
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
@@ -35,13 +37,20 @@ public class ProjectResource {
     private UriInfo uriInfo;
 
     /**
-     * Método para OBTENER todos los proyectos.
-     * Responde a: GET /resources/projects
+     * Método para OBTENER proyectos, opcionalmente filtrando por estado.
+     * Responde a: GET /resources/projects?status=Activo
      */
     @GET
-    public Response getAllProjects() {
-        // La capa REST solo coordina. La lógica está en el servicio.
-        List<ProjectDTO> projects = projectService.findAll();
+    public Response getProjects(@QueryParam("status") String status) {
+        List<ProjectDTO> projects;
+
+        if (status != null && !status.isBlank()) {
+            // Usamos nuestro nuevo método de Jakarta Data
+            projects = projectService.findByStatus(status);
+        } else {
+            projects = projectService.findAll();
+        }
+
         return Response.ok(projects).build();
     }
 
@@ -63,13 +72,13 @@ public class ProjectResource {
      * Responde a: POST /resources/projects
      */
     @POST
-    public Response createProject(ProjectDTO projectRequest) {
-        // Validación (aún simple, la mejoraremos en la Sesión 4)
-        if (projectRequest == null || projectRequest.name() == null || projectRequest.name().isEmpty()) {
-            return Response.status(Response.Status.BAD_REQUEST)
-                .entity("El nombre del proyecto es obligatorio.")
-                .build();
-        }
+    public Response createProject(@Valid ProjectDTO projectRequest) { // <-- ¡AQUÍ!
+
+        // ¡Podemos borrar nuestra validación manual!
+        // if (projectRequest == null || projectRequest.name() == null ...) {
+        //     ...
+        // }
+        // ¡Jakarta Validation se encarga de esto ahora!
 
         ProjectDTO newProject = projectService.create(projectRequest);
 

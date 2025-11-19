@@ -156,7 +156,7 @@ public class HelloWorldResource {
 }
 ```
 
-* `@Path("/hello")`: Esta clase manejará las peticiones a `.../api/hello`.
+* `@Path("/hello")`: Esta clase manejará las peticiones a `.../resources/hello`.
 * `@GET`: Este método manejará las peticiones HTTP GET.
 
 ## 5. Desplegar y Probar

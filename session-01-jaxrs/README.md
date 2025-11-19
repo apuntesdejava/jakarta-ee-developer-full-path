@@ -105,7 +105,7 @@ public class ProjectResource {
 
     /**
      * Método para OBTENER todos los proyectos.
-     * Responde a: GET /api/projects
+     * Responde a: GET /resources/projects
      */
     @GET
     public Response getAllProjects() {
@@ -116,7 +116,7 @@ public class ProjectResource {
 
     /**
      * Método para OBTENER un proyecto por su ID.
-     * Responde a: GET /api/projects/{id}
+     * Responde a: GET /resources/projects/{id}
      */
     @GET
     @Path("/{id}")
@@ -133,7 +133,7 @@ public class ProjectResource {
 
     /**
      * Método para CREAR un nuevo proyecto.
-     * Responde a: POST /api/projects
+     * Responde a: POST /resources/projects
      */
     @POST
     public Response createProject(ProjectDTO projectRequest) {

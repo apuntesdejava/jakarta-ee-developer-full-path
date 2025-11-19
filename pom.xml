@@ -14,5 +14,6 @@
         <module>session-02-cdi</module>
         <module>session-03-jpa</module>
         <module>session-04-validation</module>
+        <module>session-05-data</module>
     </modules>
 </project>
