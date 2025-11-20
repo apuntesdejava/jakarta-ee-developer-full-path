@@ -15,5 +15,6 @@
         <module>session-03-jpa</module>
         <module>session-04-validation</module>
         <module>session-05-data</module>
+        <module>session-06-faces</module>
     </modules>
 </project>

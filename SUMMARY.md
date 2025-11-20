@@ -110,7 +110,7 @@ Bienvenido a este tutorial paso a paso para construir una aplicación empresaria
 4.  Inyectar `ProjectRepository` en el servicio y usarla directamente (`repository.save(project)`, `repository.findById(id)`).
 5.  Mostrar cómo crear un método de consulta personalizado (ej. `List<Project> findByStatus(ProjectStatus status);`).
 
-## Sesión 6: La Interfaz de Usuario (UI)
+## [Sesión 6: La Interfaz de Usuario (UI)](session-06-faces/README.md)
 
 **Objetivo:** Construir una interfaz web simple para interactuar con la aplicación.
 **Especificaciones:**
