@@ -141,7 +141,7 @@ Bienvenido a este tutorial paso a paso para construir una aplicación empresaria
 4.  Implementar un `HttpAuthenticationMechanism` (ej. JWT) para la API REST.
 5.  Configurar la seguridad de JSF (basada en formulario).
 
-## Sesión 8: Concurrencia Moderna (Virtual Threads)
+## [Sesión 8: Concurrencia Moderna (Virtual Threads)](session-08-virtual_threads/README.md)
 
 **Objetivo:** Manejar tareas asíncronas de larga duración sin bloquear hilos.
 **Especificaciones:**
