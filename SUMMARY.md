@@ -125,7 +125,7 @@ Bienvenido a este tutorial paso a paso para construir una aplicación empresaria
 3.  Inyectar el `ProjectService` en el Bean.
 4.  Usar JSF (ej. `<h:dataTable>`, `<h:commandButton>`) para mostrar y crear proyectos.
 
-## Sesión 7: Seguridad de la Aplicación
+## [Sesión 7: Seguridad de la Aplicación](session-07-security/README.md)
 
 **Objetivo:** Proteger los endpoints y la UI.
 **Especificaciones:**
