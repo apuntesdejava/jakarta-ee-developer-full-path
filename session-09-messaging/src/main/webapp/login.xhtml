@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html">
+<h:head>
+    <title>Login</title>
+    <style>
+        .login-box { width: 300px; margin: 100px auto; padding: 20px; border: 1px solid #ccc; border-radius: 8px; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; }
+        .error { color: red; }
+    </style>
+</h:head>
+<h:body>
+    <div class="login-box">
+        <h3>Iniciar Sesión</h3>
+
+        <h:panelGroup rendered="#{param['error'] != null}">
+            <p class="error">Usuario o contraseña incorrectos</p>
+        </h:panelGroup>
+
+        <h:form>
+            <div class="form-group">
+                <label>Usuario:</label>
+                <h:inputText value="#{loginBean.username}" />
+            </div>
+            <div class="form-group">
+                <label>Contraseña:</label>
+                <h:inputSecret value="#{loginBean.password}" />
+            </div>
+            <h:commandButton value="Entrar" action="#{loginBean.login}" />
+        </h:form>
+    </div>
+</h:body>
+</html>

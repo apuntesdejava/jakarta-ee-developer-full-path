@@ -155,7 +155,7 @@ Bienvenido a este tutorial paso a paso para construir una aplicación empresaria
 3.  **Novedad EE 11:** Definir un `ManagedExecutorService` (usando `@ManagedExecutorDefinition`) y configurarlo para que use **Virtual Threads**.
 4.  Ejecutar una tarea asíncrona (ej. `CompletableFuture.runAsync(..., executor)`).
 
-## Sesión 9: Mensajería y Tareas Desacopladas
+## [Sesión 9: Mensajería y Tareas Desacopladas](session-09-messaging/README.md)
 
 **Objetivo:** Usar mensajería para desacoplar partes de la aplicación.
 **Especificaciones:**
