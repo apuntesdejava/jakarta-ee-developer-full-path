@@ -141,7 +141,7 @@ Bienvenido a este tutorial paso a paso para construir una aplicación empresaria
 4.  Implementar un `HttpAuthenticationMechanism` (ej. JWT) para la API REST.
 5.  Configurar la seguridad de JSF (basada en formulario).
 
-## Sesión 8: Concurrencia Moderna (Virtual Threads)
+## [Sesión 8: Concurrencia Moderna (Virtual Threads)](session-08-virtual_threads/README.md)
 
 **Objetivo:** Manejar tareas asíncronas de larga duración sin bloquear hilos.
 **Especificaciones:**
@@ -155,7 +155,7 @@ Bienvenido a este tutorial paso a paso para construir una aplicación empresaria
 3.  **Novedad EE 11:** Definir un `ManagedExecutorService` (usando `@ManagedExecutorDefinition`) y configurarlo para que use **Virtual Threads**.
 4.  Ejecutar una tarea asíncrona (ej. `CompletableFuture.runAsync(..., executor)`).
 
-## Sesión 9: Mensajería y Tareas Desacopladas
+## [Sesión 9: Mensajería y Tareas Desacopladas](session-09-messaging/README.md)
 
 **Objetivo:** Usar mensajería para desacoplar partes de la aplicación.
 **Especificaciones:**

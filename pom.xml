@@ -17,5 +17,7 @@
         <module>session-05-data</module>
         <module>session-06-faces</module>
         <module>session-07-security</module>
+        <module>session-08-virtual_threads</module>
+        <module>session-09-messaging</module>
     </modules>
 </project>
