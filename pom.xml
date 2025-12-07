@@ -19,6 +19,6 @@
         <module>session-07-security</module>
         <module>session-08-virtual_threads</module>
         <module>session-09-messaging</module>
-        <module>session-10-jobs</module>
+        <module>session-10-schedule</module>
     </modules>
 </project>
