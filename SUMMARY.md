@@ -168,8 +168,8 @@ Bienvenido a este tutorial paso a paso para construir una aplicación empresaria
 1.  Configurar una Queue JMS en Payara.
 2.  Cuando se crea una Tarea nueva, el `ProjectService` envía un mensaje a la Queue.
 3.  Crear un Message-Driven Bean (MDB) que escuche esa Queue (ej. `NotificationMDB`) y simule el envío de un email.
-
-## [Sesión 10: Tareas Programadas (Backgrounds Jobs)](session-10-schedule/README.md)
+ 
+## [Sesión 10: Tareas Programadas (Backgrounds Jobs)](session-10-schedule/README.md) 
 
 **Objetivo:** Ejecutar tareas en segundo plano de forma programada.
 **Especificaciones:**
