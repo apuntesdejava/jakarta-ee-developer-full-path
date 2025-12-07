@@ -169,7 +169,7 @@ Bienvenido a este tutorial paso a paso para construir una aplicación empresaria
 2.  Cuando se crea una Tarea nueva, el `ProjectService` envía un mensaje a la Queue.
 3.  Crear un Message-Driven Bean (MDB) que escuche esa Queue (ej. `NotificationMDB`) y simule el envío de un email.
 
-## Sesión 10: Tareas Programadas (Jobs)
+## [Sesión 10: Tareas Programadas (Backgrounds Jobs)](session-10-jobs/README.md)
 
 **Objetivo:** Ejecutar tareas en segundo plano de forma programada.
 **Especificaciones:**
@@ -181,7 +181,7 @@ Bienvenido a este tutorial paso a paso para construir una aplicación empresaria
 1.  Crear un `TaskCleanupService`.
 2.  Crear un método con la anotación `@Schedule(hour = "0", minute = "0")`.
 3.  Este método buscará y archivará tareas antiguas (ej. completadas hace más de 90 días).
-4.  (Nota: Jakarta Concurrency 3.1 también introduce `@Scheduled`, se pueden mostrar ambas formas).
+4.  (Nota: Explicar por qué usamos EJB @Schedule (declarativo) frente a Jakarta Concurrency (programático) para este caso de uso).
 
 ## Sesión 11: Interacción en Tiempo Real (Web Sockets)
 
