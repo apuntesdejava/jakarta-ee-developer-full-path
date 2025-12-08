@@ -20,5 +20,6 @@
         <module>session-08-virtual_threads</module>
         <module>session-09-messaging</module>
         <module>session-10-schedule</module>
+        <module>session-11-websockets</module>
     </modules>
 </project>
