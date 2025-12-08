@@ -183,7 +183,7 @@ Bienvenido a este tutorial paso a paso para construir una aplicación empresaria
 3.  Este método buscará y archivará tareas antiguas (ej. completadas hace más de 90 días).
 4.  (Nota: Explicar por qué usamos EJB @Schedule (declarativo) frente a Jakarta Concurrency (programático) para este caso de uso).
 
-## Sesión 11: Interacción en Tiempo Real (Web Sockets)
+## [Sesión 11: Interacción en Tiempo Real (Web Sockets)](session-11-websockets/README.md)
 
 **Objetivo:** Notificar a la UI en tiempo real cuando los datos cambien.
 **Especificaciones:**
