@@ -79,5 +79,49 @@
 
     </h:dataTable>
 
+    <script type="text/javascript">
+        // 1. Calcular la URL del WebSocket dinámicamente
+        var wsUrl = "ws://" + document.location.host + "#{request.contextPath}/ws/dashboard";
+        console.log("Conectando a: " + wsUrl);
+
+        // 2. Abrir conexión
+        var socket = new WebSocket(wsUrl);
+
+        socket.onopen = function(event) {
+            console.log("WebSocket conectado!");
+        };
+
+        // 3. Manejar mensajes entrantes
+        socket.onmessage = function(event) {
+            console.log("Mensaje recibido: " + event.data);
+
+            var project = JSON.parse(event.data);
+
+            // 4. Actualizar la tabla visualmente (Manipulación simple del DOM)
+            // Buscamos la tabla generada por JSF.
+            // Nota: JSF genera IDs complejos, pero la clase 'table' nos ayuda.
+            var table = document.querySelector(".table tbody");
+
+            if (table) {
+                var newRow = table.insertRow(-1); // Insertar al final
+                // Un poco de animación o color para resaltar
+                newRow.style.backgroundColor = "#fff3cd";
+                setTimeout(() => newRow.style.backgroundColor = "transparent", 2000);
+
+                // Insertar celdas (coincidiendo con las columnas de tu h:dataTable)
+                var cellId = newRow.insertCell(0);
+                var cellName = newRow.insertCell(1);
+                var cellDesc = newRow.insertCell(2);
+                var cellStatus = newRow.insertCell(3);
+
+                cellId.textContent = project.id;
+                cellName.textContent = project.name;
+                cellDesc.textContent = project.description;
+
+                // Renderizar el badge de estado
+                cellStatus.innerHTML = '<span style="padding: 4px 8px; background-color: #e1f5fe; border-radius: 4px;">' + project.status + '</span>';
+            }
+        };
+    </script>
 </h:body>
 </html>

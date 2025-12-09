@@ -18,6 +18,8 @@ import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriInfo;
+import org.eclipse.microprofile.metrics.annotation.Counted;
+import org.eclipse.microprofile.metrics.annotation.Timed;
 
 import java.net.URI;
 import java.util.List;
@@ -45,6 +47,10 @@ public class ProjectResource {
      */
     @GET
     @PermitAll // Público (o usa @RolesAllowed("USER") si quieres cerrarlo)
+    // @Counted: Cuenta cuántas veces se llama a este método (monótono incremental)
+    @Counted(name = "getAllProjects_total", description = "Total de veces que se listaron los proyectos")
+    // @Timed: Mide cuánto tarda la ejecución y estadísticas (media, max, min)
+    @Timed(name = "getAllProjects_timer", description = "Tiempo de respuesta de listado", unit = "milliseconds")
     public Response getProjects(@QueryParam("status") String status) {
         List<ProjectDTO> projects;
 
@@ -76,8 +82,9 @@ public class ProjectResource {
      * Responde a: POST /resources/projects
      */
     @POST
-    @RolesAllowed("ADMIN") // Solo JWT con rol ADMIN pasa aquí
-    public Response createProject(@Valid ProjectDTO projectRequest) { // <-- ¡AQUÍ!
+    @RolesAllowed("ADMIN")
+    @Counted(name = "createProject_total", description = "Total de proyectos creados")
+    public Response createProject(@Valid ProjectDTO projectRequest) {
 
         ProjectDTO newProject = projectService.create(projectRequest);
         URI location = uriInfo.getAbsolutePathBuilder().path(String.valueOf(newProject.id())).build();
