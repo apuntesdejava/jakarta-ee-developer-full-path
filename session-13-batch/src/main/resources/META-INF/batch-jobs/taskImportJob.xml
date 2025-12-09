@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<job id="taskImportJob" xmlns="https://jakarta.ee/xml/ns/jakartaee" version="2.0">
+    <step id="importStep">
+        <chunk item-count="3"> <reader ref="taskReader"/>
+            <processor ref="taskProcessor"/>
+            <writer ref="taskWriter"/>
+        </chunk>
+    </step>
+</job>

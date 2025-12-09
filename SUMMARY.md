@@ -214,16 +214,43 @@ Bienvenido a este tutorial paso a paso para construir una aplicación empresaria
 4.  Añadir métricas (ej. `@Counted` o `@Timed`) al `ProjectResource` para ver cuántas veces se llama a la API.
 5.  Acceder al endpoint `/metrics`.
 
-## Sesión 13: El Perfil "Core" (Microservicios)
 
-**Objetivo:** Entender cómo construir un microservicio ligero.
+
+## [Sesión 13: Procesamiento por Lotes (Jakarta Batch)](session-13-batch/README.md)
+
+**Objetivo:** Procesar grandes volúmenes de datos de forma robusta y asíncrona (procesamiento por lotes).
 **Especificaciones:**
 
-  * **Jakarta EE 11 Core Profile:** El subconjunto de especificaciones para runtimes ligeros.
+* **Jakarta Batch 2.1:** El estándar para definir y ejecutar trabajos de larga duración (Jobs) basados en "Chunks".
+
+1.  Implementar los componentes del patrón **Chunk**: `ItemReader` (CSV), `ItemProcessor` (Lógica) y `ItemWriter` (Base de Datos).
+2.  Definir la estructura del trabajo mediante XML (`job.xml`).
+3.  Integrar `ProjectRepository` en el Batch para validar y guardar los datos importados.
+4.  Crear un endpoint REST administrativo para disparar manualmente la ejecución del Job y monitorear su `ExecutionId`.
+
+## Sesión 14: Despliegue con Contenedores (Docker)
+
+**Objetivo:** Empaquetar la aplicación y el servidor en una imagen inmutable lista para la nube.
+**Especificaciones:**
+
+* **Docker / Contenedores OCI:** Estándar de industria para el despliegue y distribución de aplicaciones.
+
+1.  Crear un `Dockerfile` basado en la imagen oficial de **Payara 7 Server**.
+2.  Automatizar el despliegue copiando el archivo `.war` generado y los drivers de base de datos necesarios dentro de la imagen.
+3.  Construir la imagen personalizada (`docker build`) y ejecutar el contenedor exponiendo los puertos estándar (8080, 4848).
+4.  Conectar la aplicación contenedorizada con una base de datos externa (u otro contenedor) mediante variables de entorno.
+
+## Sesión 15: El Perfil "Core" y Payara Micro
+
+**Objetivo:** Empaquetar la aplicación como un microservicio autónomo (Uber-jar) y optimizar su contenedor.
+**Especificaciones:**
+
+* **Jakarta EE 11 Core Profile:** El perfil diseñado para microservicios (sin interfaz gráfica, ligero).
+* **Payara Micro:** Runtime optimizado para contenedores.
 
 <!-- end list -->
 
-1.  Explicar qué es el Core Profile (CDI, JAX-RS, JSON-B/P, Concurrency, etc.).
-2.  Crear un nuevo módulo Maven (`pom.xml`) que *solo* use las dependencias del Core Profile.
-3.  Mostrar cómo nuestra API REST (Sesión 1) y Servicios (Sesión 2) pueden funcionar en este perfil mínimo, ideal para contenedores.
-4.  Empaquetarlo con **Payara Micro** en lugar del servidor completo.
+1.  Diferenciar entre **Full Platform**, **Web Profile** y **Core Profile**.
+2.  Configurar el `payara-micro-maven-plugin` para generar un **Uber-jar** (un solo archivo `.jar` que contiene la app y el servidor).
+3.  Ejecutar la aplicación desde la línea de comandos sin instalar un servidor previo (`java -jar app.jar`).
+4.  Crear un `Dockerfile` optimizado usando la imagen base de Payara Micro para un despliegue Cloud Native.
