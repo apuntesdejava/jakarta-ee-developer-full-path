@@ -197,7 +197,7 @@ Bienvenido a este tutorial paso a paso para construir una aplicación empresaria
 3.  Usar un Evento de CDI (`@Observes`) para que cuando el `ProjectService` cree un proyecto, dispare un evento.
 4.  El `ProjectDashboardEndpoint` recibe el evento y envía el nuevo proyecto (como JSON) a todos los clientes WebSocket conectados.
 
-## Sesión 12: Observabilidad y Salud (MicroProfile)
+## [Sesión 12: Observabilidad y Salud (MicroProfile)](session-12-heath/README.md)
 
 **Objetivo:** Exponer el estado de la aplicación para monitoreo.
 **Especificaciones:**

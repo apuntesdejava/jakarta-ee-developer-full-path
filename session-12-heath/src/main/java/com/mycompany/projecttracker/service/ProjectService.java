@@ -3,12 +3,14 @@ package com.mycompany.projecttracker.service;
 import com.mycompany.projecttracker.entity.AuditInfo;
 import com.mycompany.projecttracker.entity.Project;
 import com.mycompany.projecttracker.entity.Task;
+import com.mycompany.projecttracker.event.ProjectCreatedEvent;
 import com.mycompany.projecttracker.mapper.ProjectMapper;
 import com.mycompany.projecttracker.model.ProjectDTO;
 import com.mycompany.projecttracker.model.TaskDTO;
 import com.mycompany.projecttracker.repository.ProjectRepository;
 import jakarta.annotation.Resource;
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.event.Event;
 import jakarta.inject.Inject;
 import jakarta.jms.JMSContext;
 import jakarta.jms.Queue;
@@ -43,6 +45,10 @@ public class ProjectService {
     @PersistenceContext(unitName = "project-tracker-pu")
     private EntityManager em;
 
+    // 1. Inyectamos el disparador de eventos
+    @Inject
+    private Event<ProjectCreatedEvent> projectEvent;
+
     public List<ProjectDTO> findAll() {
         return repository.findAll()
             .map(mapper::toDTO)
@@ -61,12 +67,23 @@ public class ProjectService {
     }
 
     public ProjectDTO create(ProjectDTO projectRequest) {
+        // ... (lógica de mapeo y guardado en repository) ...
         Project newEntity = mapper.toEntity(projectRequest);
         newEntity.setStatus("Nuevo");
         newEntity.setAuditInfo(new AuditInfo("admin_user", LocalDate.now()));
+
         newEntity = repository.save(newEntity);
 
-        return mapper.toDTO(newEntity);
+        ProjectDTO createdDto = mapper.toDTO(newEntity);
+
+        // 2. ¡DISPARAMOS EL EVENTO!
+        // Esto notificará a cualquier @Observes en la aplicación de forma síncrona
+        // (o asíncrona si usamos fireAsync, pero usaremos fire() por simplicidad).
+        projectEvent.fire(new ProjectCreatedEvent(createdDto));
+
+        LOGGER.info("--> Evento CDI disparado para Proyecto ID: " + createdDto.id());
+
+        return createdDto;
     }
 
     /**
