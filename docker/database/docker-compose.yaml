@@ -1,7 +1,7 @@
 services:
   db:
     image: postgres:18.1-alpine3.22
-#    restart: always
+    container_name: project_tracker_db
     environment:
       POSTGRES_USER: PROJECT_TRACKER
       POSTGRES_PASSWORD: PROJECT_TRACKER

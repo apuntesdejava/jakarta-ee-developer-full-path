@@ -228,7 +228,7 @@ Bienvenido a este tutorial paso a paso para construir una aplicación empresaria
 3.  Integrar `ProjectRepository` en el Batch para validar y guardar los datos importados.
 4.  Crear un endpoint REST administrativo para disparar manualmente la ejecución del Job y monitorear su `ExecutionId`.
 
-## Sesión 14: Despliegue con Contenedores (Docker)
+## [Sesión 14: Despliegue con Contenedores (Docker)](session-14-container/README.md)
 
 **Objetivo:** Empaquetar la aplicación y el servidor en una imagen inmutable lista para la nube.
 **Especificaciones:**
