@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core">
+
+<h:head>
+    <title>Project Tracker - Jakarta EE 11</title>
+    <!-- Un poco de CSS simple para que no se vea tan mal -->
+    <style>
+        body { font-family: sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
+        h1 { color: #2c3e50; }
+        .table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        .table th, .table td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        .table th { background-color: #f2f2f2; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; }
+        input[type="text"], textarea { width: 100%; padding: 8px; box-sizing: border-box; }
+        .btn { background-color: #e67e22; color: white; padding: 10px 15px; border: none; cursor: pointer; }
+        .btn:hover { background-color: #d35400; }
+        .error { color: red; }
+    </style>
+</h:head>
+
+<h:body>
+    <h1>📋 Project Tracker</h1>
+
+    <!-- SECCIÓN 1: Formulario de Creación -->
+    <div style="background-color: #fafafa; padding: 20px; border-radius: 8px;">
+        <h3>Nuevo Proyecto</h3>
+
+        <h:form id="projectForm">
+            <!-- Mensajes de error globales o de validación -->
+            <h:messages globalOnly="true" styleClass="error" />
+
+            <div class="form-group">
+                <label>Nombre:</label>
+                <!-- value conecta con projectBean.formName -->
+                <h:inputText id="name" value="#{projectBean.formName}" required="true" requiredMessage="El nombre es obligatorio"/>
+                <h:message for="name" styleClass="error" />
+            </div>
+
+            <div class="form-group">
+                <label>Descripción:</label>
+                <h:inputTextarea id="desc" value="#{projectBean.formDescription}" rows="3" />
+            </div>
+
+            <!-- action llama al método del bean -->
+            <h:commandButton value="Guardar Proyecto" action="#{projectBean.createProjectFromForm}" styleClass="btn" />
+        </h:form>
+    </div>
+
+    <!-- SECCIÓN 2: Lista de Proyectos -->
+    <h3>Proyectos Existentes</h3>
+
+    <!-- h:dataTable es un bucle automático sobre la lista -->
+    <h:dataTable value="#{projectBean.projects}" var="p" styleClass="table">
+
+        <h:column>
+            <f:facet name="header">ID</f:facet>
+            #{p.id()}
+        </h:column>
+
+        <h:column>
+            <f:facet name="header">Nombre</f:facet>
+            #{p.name()}
+        </h:column>
+
+        <h:column>
+            <f:facet name="header">Descripción</f:facet>
+            #{p.description()}
+        </h:column>
+
+        <h:column>
+            <f:facet name="header">Estado</f:facet>
+            <span style="padding: 4px 8px; background-color: #e1f5fe; border-radius: 4px;">
+                    #{p.status()}
+                </span>
+        </h:column>
+
+    </h:dataTable>
+
+    <script type="text/javascript">
+        // 1. Calcular la URL del WebSocket dinámicamente
+        var wsUrl = "ws://" + document.location.host + "#{request.contextPath}/ws/dashboard";
+        console.log("Conectando a: " + wsUrl);
+
+        // 2. Abrir conexión
+        var socket = new WebSocket(wsUrl);
+
+        socket.onopen = function(event) {
+            console.log("WebSocket conectado!");
+        };
+
+        // 3. Manejar mensajes entrantes
+        socket.onmessage = function(event) {
+            console.log("Mensaje recibido: " + event.data);
+
+            var project = JSON.parse(event.data);
+
+            // 4. Actualizar la tabla visualmente (Manipulación simple del DOM)
+            // Buscamos la tabla generada por JSF.
+            // Nota: JSF genera IDs complejos, pero la clase 'table' nos ayuda.
+            var table = document.querySelector(".table tbody");
+
+            if (table) {
+                var newRow = table.insertRow(-1); // Insertar al final
+                // Un poco de animación o color para resaltar
+                newRow.style.backgroundColor = "#fff3cd";
+                setTimeout(() => newRow.style.backgroundColor = "transparent", 2000);
+
+                // Insertar celdas (coincidiendo con las columnas de tu h:dataTable)
+                var cellId = newRow.insertCell(0);
+                var cellName = newRow.insertCell(1);
+                var cellDesc = newRow.insertCell(2);
+                var cellStatus = newRow.insertCell(3);
+
+                cellId.textContent = project.id;
+                cellName.textContent = project.name;
+                cellDesc.textContent = project.description;
+
+                // Renderizar el badge de estado
+                cellStatus.innerHTML = '<span style="padding: 4px 8px; background-color: #e1f5fe; border-radius: 4px;">' + project.status + '</span>';
+            }
+        };
+    </script>
+</h:body>
+</html>

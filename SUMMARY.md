@@ -240,7 +240,7 @@ Bienvenido a este tutorial paso a paso para construir una aplicación empresaria
 3.  Construir la imagen personalizada (`docker build`) y ejecutar el contenedor exponiendo los puertos estándar (8080, 4848).
 4.  Conectar la aplicación contenedorizada con una base de datos externa (u otro contenedor) mediante variables de entorno.
 
-## Sesión 15: El Perfil "Core" y Payara Micro
+## [Sesión 15: El Perfil "Core" y Payara Micro](session-15-payaramicro/README.md)
 
 **Objetivo:** Empaquetar la aplicación como un microservicio autónomo (Uber-jar) y optimizar su contenedor.
 **Especificaciones:**

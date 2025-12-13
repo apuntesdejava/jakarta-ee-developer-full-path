@@ -24,5 +24,6 @@
         <module>session-12-heath</module>
         <module>session-13-batch</module>
         <module>session-14-container</module>
+        <module>session-15-payaramicro</module>
     </modules>
 </project>

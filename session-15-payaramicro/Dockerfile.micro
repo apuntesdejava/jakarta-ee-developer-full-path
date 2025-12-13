@@ -1,0 +1,21 @@
+# 1. Usamos la imagen oficial de Payara Micro (JDK 21)
+FROM payara/micro:7.2025.2
+
+# 2. Copiamos el WAR
+COPY target/project-tracker.war $DEPLOY_DIR
+
+# 3. Descargamos el Driver de Postgres
+USER root
+ADD https://repo1.maven.org/maven2/org/postgresql/postgresql/42.7.3/postgresql-42.7.3.jar \
+    /opt/payara/libs/postgresql.jar
+RUN chown payara:payara /opt/payara/libs/postgresql.jar
+USER payara
+
+# 4. CORRECCIÓN: Copiamos el script a una ruta absoluta y conocida
+# Usamos /opt/payara/ porque es el HOME del usuario por defecto
+COPY post-boot-commands.asadmin /opt/payara/post-boot.asadmin
+
+# 5. Comando de arranque
+# Sobreescribimos el comando por defecto para añadir nuestros parámetros.
+# Es importante volver a pasar --deploymentDir para que se despliegue la aplicación.
+CMD ["--deploymentDir", "/opt/payara/deployments", "--postbootcommandfile", "/opt/payara/post-boot.asadmin", "--addLibs", "/opt/payara/libs/postgresql.jar", "--contextroot", "/"]
