@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.mycompany</groupId>
+    <artifactId>project-tracker-payaramicro</artifactId>
+    <version>0.1-SNAPSHOT</version>
+    <packaging>war</packaging>
+
+    <name>project-tracker-payaramicro</name>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.release>21</maven.compiler.release>
+        <jakartaee-api.version>11.0.0</jakartaee-api.version>
+        <payara.version>7.2025.2</payara.version>
+        <payara.home>payara</payara.home>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>fish.payara.api</groupId>
+                <artifactId>payara-bom</artifactId>
+                <version>${payara.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <dependencies>
+        <dependency>
+            <groupId>jakarta.platform</groupId>
+            <artifactId>jakarta.jakartaee-web-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.microprofile</groupId>
+            <artifactId>microprofile</artifactId>
+            <scope>provided</scope>
+            <type>pom</type>
+        </dependency>
+        <dependency>
+            <groupId>fish.payara.api</groupId>
+            <artifactId>payara-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- for security -->
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-api</artifactId>
+            <version>0.13.0</version>
+        </dependency>
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-impl</artifactId>
+            <version>0.13.0</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-jackson</artifactId>
+            <version>0.13.0</version>
+            <scope>runtime</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>jakarta.jms</groupId>
+            <artifactId>jakarta.jms-api</artifactId>
+            <version>3.1.0</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>jakarta.batch</groupId>
+            <artifactId>jakarta.batch-api</artifactId>
+            <version>2.1.1</version>
+            <scope>provided</scope>
+        </dependency> 
+    </dependencies>
+
+    <build>
+        <finalName>project-tracker</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.13.0</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>3.4.0</version>
+                <configuration>
+                    <failOnMissingWebXml>false</failOnMissingWebXml>
+                </configuration>
+            </plugin>
+            <!-- Execute 'mvn clean package payara-server:dev' to run the application. -->
+            <plugin>
+                <groupId>fish.payara.maven.plugins</groupId>
+                <artifactId>payara-server-maven-plugin</artifactId>
+                <version>1.0.0-Alpha3</version>
+                <configuration>
+                    <payaraServerVersion>${payara.version}</payaraServerVersion>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>fish.payara.maven.plugins</groupId>
+                <artifactId>payara-micro-maven-plugin</artifactId>
+                <version>2.4</version>
+                <configuration>
+                    <payaraVersion>${payara.version}</payaraVersion>
+                    <deployWar>true</deployWar>
+                    <contextRoot>/</contextRoot>
+                </configuration>
+
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>bundle</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+    <repositories>
+        <repository>
+            <id>payara-nexus-artifacts</id>
+            <url>https://nexus.dev.payara.fish/repository/payara-artifacts</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+
+
+    <profiles>
+    </profiles>
+
+
+</project>

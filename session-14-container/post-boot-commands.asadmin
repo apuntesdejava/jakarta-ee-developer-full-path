@@ -1,0 +1,11 @@
+# 1. Crear el Pool de Conexiones
+# Fíjate en la magia: ${ENV=...}
+# Esto le dice a Payara: "No uses un valor fijo, lee la Variable de Entorno del sistema".
+create-jdbc-connection-pool  --datasourceclassname org.postgresql.ds.PGPoolingDataSource  --restype javax.sql.DataSource  --property "url=${ENV=DB_URL}:user=${ENV=DB_USER}:password=${ENV=DB_PASSWORD}"  ProjectTrackerPool
+
+# 2. Crear el Recurso JNDI (El nombre que usa JPA en persistence.xml)
+create-jdbc-resource  --connectionpoolid ProjectTrackerPool  jdbc/projectTracker
+
+# 3. Configurar la Cola JMS (Sesión 9)
+# (Si usaste @JMSDestinationDefinition en Java, esto es opcional,
+# pero hacerlo aquí es más "Infrastructure as Code")
