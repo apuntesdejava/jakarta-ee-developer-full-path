@@ -42,7 +42,7 @@ Para evitar escribir el `pom.xml` de configuración desde cero, usaremos la herr
      - Profile: `Web Profile` (Es un buen punto de partida. Añadiremos más dependencias después).
    - Payara Platform
      - Payara Server
-     - Payara Platform version: `7.2025.2`
+     - Payara Platform version: `7.2026.3`
    - Project Configuration
      - Package: (el mismo de su Group ID)
      - No incluir Test
@@ -62,7 +62,7 @@ Lo más importante que ha generado esta herramienta está en tu [`pom.xml`](pom.
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.release>21</maven.compiler.release>
         <jakartaee-api.version>11.0.0</jakartaee-api.version>
-        <payara.version>7.2025.2</payara.version>
+        <payara.version>7.2026.3</payara.version>
         <payara.home>payara</payara.home>
     </properties>
     

@@ -54,7 +54,7 @@ Este archivo es la "receta" para construir nuestra imagen.
 Crea un archivo llamado [`Dockerfile`](Dockerfile) (sin extensión) en la raíz del proyecto:
 
 ```dockerfile
-FROM payara/server-full:7.2025.2
+FROM payara/server-full:7.2026.3
 # 1. Copiar la App
 COPY target/project-tracker.war $DEPLOY_DIR
 

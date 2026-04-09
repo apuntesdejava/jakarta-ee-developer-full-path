@@ -14,7 +14,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.release>21</maven.compiler.release>
         <jakartaee-api.version>11.0.0</jakartaee-api.version>
-        <payara.version>7.2025.2</payara.version>
+        <payara.version>7.2026.3</payara.version>
         <payara.home>payara</payara.home>
     </properties>
 
@@ -89,12 +89,12 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.13.0</version>
+                <version>3.15.0</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
-                <version>3.4.0</version>
+                <version>3.5.1</version>
                 <configuration>
                     <failOnMissingWebXml>false</failOnMissingWebXml>
                 </configuration>
@@ -103,7 +103,7 @@
             <plugin>
                 <groupId>fish.payara.maven.plugins</groupId>
                 <artifactId>payara-server-maven-plugin</artifactId>
-                <version>1.0.0-Alpha3</version>
+                <version>1.0.0-Alpha4</version>
                 <configuration>
                     <payaraServerVersion>${payara.version}</payaraServerVersion>
                 </configuration>

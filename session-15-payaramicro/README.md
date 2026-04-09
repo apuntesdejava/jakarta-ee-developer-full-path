@@ -66,7 +66,7 @@ Abre tu `pom.xml` y añade este plugin en la sección `<build><plugins>`:
     <artifactId>payara-micro-maven-plugin</artifactId>
     <version>2.4</version>
     <configuration>
-        <payaraVersion>7.2025.2</payaraVersion>
+        <payaraVersion>7.2026.3</payaraVersion>
         <deployWar>true</deployWar>
         <contextRoot>/</contextRoot>
         <postBootCommandFile>post-boot-commands.asadmin</postBootCommandFile>
@@ -166,7 +166,7 @@ Crea un archivo [`Dockerfile.micro`](Dockerfile.micro):
 
 ```dockerfile
 # 1. Usamos la imagen oficial de Payara Micro (JDK 21)
-FROM payara/micro:7.2025.2
+FROM payara/micro:7.2026.3
 
 # 2. Copiamos el WAR
 COPY target/project-tracker.war $DEPLOY_DIR

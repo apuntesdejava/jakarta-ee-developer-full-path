@@ -1,5 +1,5 @@
 # 1. Usamos la imagen oficial de Payara Micro (JDK 21)
-FROM payara/micro:7.2025.2
+FROM payara/micro:7.2026.3
 
 # 2. Copiamos el WAR
 COPY target/project-tracker.war $DEPLOY_DIR

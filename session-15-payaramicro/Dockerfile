@@ -1,4 +1,4 @@
-FROM payara/server-full:7.2025.2
+FROM payara/server-full:7.2026.3
 # 1. Copiar la App
 COPY target/project-tracker.war $DEPLOY_DIR
 

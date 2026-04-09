@@ -1,6 +1,6 @@
 services:
   db:
-    image: postgres:18.1-alpine3.22
+    image: postgres:18.3-alpine3.22
     container_name: project_tracker_db
     environment:
       POSTGRES_USER: PROJECT_TRACKER
